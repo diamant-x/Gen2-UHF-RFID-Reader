@@ -235,25 +235,25 @@ namespace gr {
         written_sync ++;  
         
         produce(1,written_sync);
-
+        
 
 
         for (float j = RN16_index; j < ninput_items[0]; j += n_samples_TAG_BIT/2 )
         {
-          number_of_half_bits++;
-          int k = round(j);
-          RN16_samples_complex.push_back(in[k]);
+            number_of_half_bits++;
+            int k = round(j);
+            RN16_samples_complex.push_back(in[k]);
 
             out_2[written_sync] = in[k];
             written_sync ++;
 
-          if (number_of_half_bits == 2*(RN16_BITS-1))
-          {
+            if (number_of_half_bits == 2*(RN16_BITS-1))
+            {
                 out_2[written_sync] = h_est;
                 written_sync ++;  
                 produce(1,written_sync);        
-            break;
-          }
+                break;
+            }
         }    
 
         // RN16 bits are passed to the next block for the creation of ACK message
@@ -310,14 +310,14 @@ namespace gr {
         for (int j = 0; j < ninput_items[0] ; j ++ )
         {
           out_2[written_sync] = in[j];
-           written_sync ++;          
+            written_sync ++;
         }
         
         out_2[written_sync] = 20;
         written_sync ++;  
            
         produce(1,written_sync);
-
+        
 
         EPC_bits   = tag_detection_EPC(EPC_samples_complex,EPC_index);
 
@@ -353,22 +353,23 @@ namespace gr {
 
             reader_state->reader_stats.n_epc_correct+=1;
 
-            int result = 0;
-            for(int i = 0 ; i < 8 ; ++i)
+            // Changing from 8 to 32 has augmented from 'fa' to 'fa9fafa'
+            unsigned long long result = 0; // con only hold up to 63 bits, or grouping by 4 for hexadecimals, 60 bits.
+            for(int i = 0 ; i < 60 ; ++i) // CHANGED: for(int i = 0 ; i < 8 ; ++i)
             {
-              result += std::pow(2,7-i) * EPC_bits[104+i] ;
+              result += std::pow(2,59-i) * EPC_bits[EPC_bits.size()-60+i] ; // CHANGED: result += std::pow(2,7-i) * EPC_bits[104+i] ;
             }
             GR_LOG_INFO(d_debug_logger, "EPC CORRECTLY DECODED, TAG ID : " << result);
 
             // Save part of Tag's EPC message (EPC[104:111] in decimal) + number of reads
-            std::map<int,int>::iterator it = reader_state->reader_stats.tag_reads.find(result);
+            std::map<std::string,int>::iterator it = reader_state->reader_stats.tag_reads.find(std::to_string(result));
             if ( it != reader_state->reader_stats.tag_reads.end())
             {
               it->second ++;
             }
             else
             {
-              reader_state->reader_stats.tag_reads[result]=1;
+              reader_state->reader_stats.tag_reads[std::to_string(result)]=1;
             }
           }
           else

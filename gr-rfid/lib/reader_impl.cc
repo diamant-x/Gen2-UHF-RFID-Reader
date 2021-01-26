@@ -180,11 +180,11 @@ namespace gr {
       std::cout << "| Correctly decoded EPC : "  <<  reader_state->reader_stats.n_epc_correct     << std::endl;
       std::cout << "| Number of unique tags : "  <<  reader_state->reader_stats.tag_reads.size() << std::endl;
 
-      std::map<int,int>::iterator it;
+      std::map<std::string,int>::iterator it;
 
-      for(it = reader_state->reader_stats.tag_reads.begin(); it != reader_state->reader_stats.tag_reads.end(); it++) 
+      for( it = reader_state->reader_stats.tag_reads.begin(); it != reader_state->reader_stats.tag_reads.end(); ++it) 
       {
-        std::cout << std::hex <<  "| Tag ID : " << it->first << "  ";
+        std::cout << std::hex <<  "| Tag ID : " << std::strtoull((it->first).c_str(), NULL, 0) << "  ";
         std::cout << "Num of reads : " << std::dec << it->second << std::endl;
       }
 

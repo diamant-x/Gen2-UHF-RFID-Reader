@@ -38,7 +38,7 @@ namespace gr {
       reader_state-> reader_stats.n_epc_correct = 0;
 
       std::vector<int>  unique_tags_round;
-       std::map<int,int> tag_reads;    
+       std::map<std::string,int> tag_reads;  // Changed from map<int,int>  , the first will be the decimal value of the hex EPC value.
 
       reader_state-> status           = RUNNING;
       reader_state-> gen2_logic_status= START;
