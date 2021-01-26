@@ -57,8 +57,8 @@ class reader_top_block(gr.top_block):
     self.rx_gain   = 20                  # RX Gain (gain at receiver)
     self.tx_gain   = 20                    # RFX900 no Tx gain option
 
-    self.usrp_address_source = "addr=192.168.10.2,recv_frame_size=256"
-    self.usrp_address_sink   = "addr=192.168.10.2,recv_frame_size=256"
+    self.usrp_address_source = "addr=192.168.10.2" #,recv_frame_size=256
+    self.usrp_address_sink   = "addr=192.168.10.2"
 
     # Each FM0 symbol consists of ADC_RATE/BLF samples (2e6/40e3 = 50 samples)
     # 10 samples per symbol after matched filtering and decimation
