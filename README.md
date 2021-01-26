@@ -1,15 +1,15 @@
 # Gen2 UHF RFID Reader
-This is a Gen2 UHF RFID Reader. It is able to identify commercial Gen2 RFID Tags with FM0 line coding and 40kHz data rate (BLF), and extract their EPC. It requires USRPN200 and a RFX900 or SBX daughterboard.  
+This is a Gen2 UHF RFID Reader project for GNURadio. It is able to identify commercial Gen2 RFID Tags with FM0 line coding and 40kHz data rate (BLF), and extract their EPC. It requires USRPN200 and a RFX900 or SBX daughterboard.  
 
-The project is based on the RFID Gen2 Reader available at https://github.com/ransford/gen2_rfid. The reader borrows elements from the software developed by Buettner, i.e. Data flow: Gate -> Decoder -> Reader as well as the conception regarding the detection of the reader commands. CRC calculation and checking functions were also adapted from https://www.cgran.org/browser/projects/gen2_rfid/.
+The project is based on the UHF RFID Gen2 Reader project available at (https://github.com/nkargas/Gen2-UHF-RFID-Reader).
 
-### Implemented GNU Radio Blocks:
+### Custom GNU Radio Blocks in this project:
 
 - Gate : Responsible for reader command detection.  
 - Tag decoder : Responsible for frame synchronization, channel estimation, symbol period estimation and detection.  
 - Reader : Create/send reader commands.
 
-## Installation
+## Installation of
 
 - install log4cpp (http://log4cpp.sourceforge.net/)
 - install UHD driver + GNU Radio using **wget http://www.sbrac.org/files/build-gnuradio && chmod a+x ./build-gnuradio && ./build-gnuradio**
@@ -22,9 +22,9 @@ The project is based on the RFID Gen2 Reader available at https://github.com/ran
 
 ## Configuration
 
-- Set USRPN200 address in apps/reader.py (default: 192.168.10.2)
-- Set frequency in apps/reader.py (default: 910MHz)
-- Set tx amplitude in apps/reader.py (default: 0.1)
+- Set USRPN210 address in apps/reader.py (default: 192.168.10.2)
+- Set frequency in apps/reader.py (default: 865.7e6 MHz)
+- Set tx amplitude in apps/reader.py (default: 0.9)
 - Set rx gain in apps/reader.py (default: 20)
 - Set maximum number of queries in include/global_vars.h (default:1000)
 - Set number of inventory round slots in include/global_vars.h (default: 0)
@@ -35,19 +35,7 @@ The project is based on the RFID Gen2 Reader available at https://github.com/ran
 If you use an SBX daughterboard uncomment  #self.source.set_auto_dc_offset(False) in reader.py file
 cd Gen2-UHF-RFID-Reader/gr-rfid/apps/    
 sudo GR_SCHEDULER=STS nice -n -20 python ./reader.py     
-After termination, part of EPC message (hex value of EPC[104:111]) of identified Tags is printed.  
-
-- Offline:  
-    Change DEBUG variable in apps/reader.py to TRUE (A test file already exists named file_source_test).  
-    The reader works with offline traces without using a USRP.  
-    The output after running the software with test file is:  
-    
-    | Number of queries/queryreps sent : 71  
-    | Current Inventory round : 72  
-
-    | Correctly decoded EPC : 70  
-    | Number of unique tags : 1  
-    | Tag ID : 27  Num of reads : 70  
+After termination, part of EPC message (last 60 bits) of identified Tags are printed.  
  
 ## Logging
 
@@ -84,6 +72,8 @@ Run the software for a few seconds (~5s). A file will be created in misc/data di
 
 Useful discussions on software issues:
 
+https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/1
+
 https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/4
 
 https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/10
@@ -91,18 +81,17 @@ https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/10
     
 ## Hardware:
 
-  - 1x USRPN200/N210  
-  - 1x RFX900/SBX daughterboard  
+  - 1x Ettus/NI USRPN210  
+  - 1x Ettus/NI UBX40 daughterboard  
   - 2x circular polarized antennas  
 
 ## Tested on:
-  Ubuntu 14.04 64-bit  
-  GNU Radio 3.7.4
-  
-## If you use this software please cite:
+  Kuuntu 18.04 64-bit  
+  GNU Radio 3.7.11
+
+
+## Forked from:
 N. Kargas, F. Mavromatis and A. Bletsas, "Fully-Coherent Reader with Commodity SDR for Gen2 FM0 and Computational RFID", IEEE Wireless Communications Letters (WCL), Vol. 4, No. 6, pp. 617-620, Dec. 2015. 
 
-## Contact:
-  Nikos Kargas (email: karga005@umn.edu)  
-
-This research has been co-financed by the European Union (European Social Fund-ESF) and Greek national funds through the Operational Program Education and Lifelong Learning of the National Strategic Reference Framework (NSRF) - Research Funding Program: THALES-Investing in knowledge society through the European Social Fund.
+## This repository contact:
+  (email: diamantx@gmail.com)  
