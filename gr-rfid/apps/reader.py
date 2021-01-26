@@ -26,7 +26,7 @@ class reader_top_block(gr.top_block):
     self.source.set_center_freq(self.freq, 0)
     self.source.set_gain(self.rx_gain, 0)
     self.source.set_antenna("RX2", 0)
-    #self.source.set_auto_dc_offset(False) # Uncomment this line for SBX daughterboard
+    self.source.set_auto_dc_offset(False) # Uncomment this line for SBX daughterboard
 
   # Configure usrp sink
   def u_sink(self):
@@ -52,10 +52,10 @@ class reader_top_block(gr.top_block):
     self.dac_rate = 1e6                 # DAC rate 
     self.adc_rate = 100e6/50            # ADC rate (2MS/s complex samples)
     self.decim     = 5                    # Decimation (downsampling factor)
-    self.ampl     = 0.1                  # Output signal amplitude (signal power vary for different RFX900 cards)
-    self.freq     = 910e6                # Modulation frequency (can be set between 902-920)
-    self.rx_gain   = 20                   # RX Gain (gain at receiver)
-    self.tx_gain   = 0                    # RFX900 no Tx gain option
+    self.ampl     = 0.9                 # Output signal amplitude (signal power vary for different RFX900 cards)
+    self.freq     = 865.7e6 #865.7e6                # Modulation frequency (can be set between 902-920)
+    self.rx_gain   = 20                  # RX Gain (gain at receiver)
+    self.tx_gain   = 20                    # RFX900 no Tx gain option
 
     self.usrp_address_source = "addr=192.168.10.2,recv_frame_size=256"
     self.usrp_address_sink   = "addr=192.168.10.2,recv_frame_size=256"
