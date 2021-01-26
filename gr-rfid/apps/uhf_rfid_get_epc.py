@@ -121,6 +121,14 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.multiply_const_ff = blocks.multiply_const_ff(ampl)
         self.matched_filter = filter.fir_filter_ccc(decim, (num_taps))
         self.matched_filter.declare_sample_delay(0)
+        self.file_sink_source = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/source', False)
+        self.file_sink_source.set_unbuffered(False)
+        self.file_sink_reader = blocks.file_sink(gr.sizeof_float*1, '../misc/data/reader', False)
+        self.file_sink_reader.set_unbuffered(False)
+        self.file_sink_matched_filter = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/matched_filter', False)
+        self.file_sink_matched_filter.set_unbuffered(False)
+        self.file_sink_gate = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/gate', False)
+        self.file_sink_gate.set_unbuffered(False)
         self.file_sink_decoder = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/decoder', False)
         self.file_sink_decoder.set_unbuffered(False)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
@@ -131,12 +139,16 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.blocks_float_to_complex_0, 0), (self.uhd_usrp_sink, 0))
+        self.connect((self.matched_filter, 0), (self.file_sink_matched_filter, 0))
         self.connect((self.matched_filter, 0), (self.rfid_gate, 0))
         self.connect((self.multiply_const_ff, 0), (self.blocks_float_to_complex_0, 0))
+        self.connect((self.rfid_gate, 0), (self.file_sink_gate, 0))
         self.connect((self.rfid_gate, 0), (self.rfid_tag_decoder, 0))
+        self.connect((self.rfid_reader, 0), (self.file_sink_reader, 0))
         self.connect((self.rfid_reader, 0), (self.multiply_const_ff, 0))
         self.connect((self.rfid_tag_decoder, 1), (self.file_sink_decoder, 0))
         self.connect((self.rfid_tag_decoder, 0), (self.rfid_reader, 0))
+        self.connect((self.uhd_usrp_source, 0), (self.file_sink_source, 0))
         self.connect((self.uhd_usrp_source, 0), (self.matched_filter, 0))
 
     def closeEvent(self, event):
