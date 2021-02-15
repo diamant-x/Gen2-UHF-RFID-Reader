@@ -222,39 +222,50 @@ namespace gr {
       // Processing only after n_samples_to_ungate are available and we need to decode an RN16
       if (reader_state->decoder_status == DECODER_DECODE_RN16 && ninput_items[0] >= reader_state->n_samples_to_ungate)
       {
+        // The next lines are to output the RN16 bits. Either the output is filtered waveform, or the output is in complex numbers. Source: https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/9#issuecomment-546449809
         RN16_index = tag_sync(in,ninput_items[0]);
-
-        
-        for (int j = 0; j < ninput_items[0]; j ++ )
+        // Change true for either one output or the other.
+        if (false)
         {
-          out_2[written_sync] = in[j];
-           written_sync ++;
-        }    
-        
-        out_2[written_sync] = 20;
-        written_sync ++;  
-        
-        produce(1,written_sync);
-        
-
-
-        for (float j = RN16_index; j < ninput_items[0]; j += n_samples_TAG_BIT/2 )
+          // Output 1: decoding data after matched filtering and dc offset removal 
+          for (int j = 0; j < ninput_items[0]; j ++ )
+          {
+            out_2[written_sync] = in[j];
+            written_sync ++;
+          }    
+          
+          out_2[written_sync] = 20; // This is hard-coded into the output to mark the splits between consecutive RN16 outputs.
+          written_sync ++;  
+          
+          produce(1,written_sync);
+        }
+        else if (false)
         {
+          // Output 2: non-decoded data.
+          for (float j = RN16_index; j < ninput_items[0]; j += n_samples_TAG_BIT/2 )
+          {
             number_of_half_bits++;
             int k = round(j);
             RN16_samples_complex.push_back(in[k]);
 
-            out_2[written_sync] = in[k];
-            written_sync ++;
+            // The next 2 lines are Mod2a
+            out_2[written_sync] = in[k];  // j starts from RN16_index which is obtained from synchronization
+            written_sync ++;              // you should increase this counter every time you write something to the output vector
 
             if (number_of_half_bits == 2*(RN16_BITS-1))
             {
+                // The next 2 lines are Mod2b
                 out_2[written_sync] = h_est;
                 written_sync ++;  
                 produce(1,written_sync);        
                 break;
             }
-        }    
+          } 
+        }
+        else
+        {
+          // No Output 3. (Mind that further below is an additional output sequence)
+        }
 
         // RN16 bits are passed to the next block for the creation of ACK message
         if (number_of_half_bits == 2*(RN16_BITS-1))
@@ -306,17 +317,20 @@ namespace gr {
           EPC_samples_complex.push_back(in[j]);
         }
 
-        
-        for (int j = 0; j < ninput_items[0] ; j ++ )
+        // Mod3 Output of: EPC decoding data after matched filtering and dc offset removal (similar to the lines 227-234). This might be concatenated with the previous
+        if (true)
         {
-          out_2[written_sync] = in[j];
-            written_sync ++;
+          for (int j = 0; j < ninput_items[0] ; j ++ )
+          {
+            out_2[written_sync] = in[j];
+              written_sync ++;
+          }
+          
+          out_2[written_sync] = 20; // This is hard-coded into the output to mark the splits between consecutive EPC outputs.
+          written_sync ++;  
+            
+          produce(1,written_sync);
         }
-        
-        out_2[written_sync] = 20;
-        written_sync ++;  
-           
-        produce(1,written_sync);
         
 
         EPC_bits   = tag_detection_EPC(EPC_samples_complex,EPC_index);
