@@ -225,7 +225,7 @@ namespace gr {
         // The next lines are to output the RN16 bits. Either the output is filtered waveform, or the output is in complex numbers. Source: https://github.com/nkargas/Gen2-UHF-RFID-Reader/issues/9#issuecomment-546449809
         RN16_index = tag_sync(in,ninput_items[0]);
         // Change true for either one output or the other.
-        if (false)
+        if (true)
         {
           // Output 1: decoding data after matched filtering and dc offset removal 
           for (int j = 0; j < ninput_items[0]; j ++ )
