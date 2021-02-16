@@ -30,7 +30,7 @@ class uhf_rfid_get_epc_nogui(gr.top_block):
         # Variables
         ##################################################
         self.adc_rate = adc_rate = 2e6
-        self.tx_gain = tx_gain = 20
+        self.tx_gain = tx_gain = 10
         self.taps_fir_averaging_samples = taps_fir_averaging_samples = [1]*25
         self.samplerate_rfidblocks = samplerate_rfidblocks = adc_rate/1
         self.rx_gain = rx_gain = 20
@@ -88,13 +88,17 @@ class uhf_rfid_get_epc_nogui(gr.top_block):
         self.fir_filter.declare_sample_delay(0)
         self.file_sink_source = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/source', False)
         self.file_sink_source.set_unbuffered(False)
+        self.file_sink_reader_0 = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/file_sink', False)
+        self.file_sink_reader_0.set_unbuffered(False)
         self.file_sink_reader = blocks.file_sink(gr.sizeof_float*1, '../misc/data/reader', False)
         self.file_sink_reader.set_unbuffered(False)
         self.file_sink_matched_filter = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/matched_filter', False)
         self.file_sink_matched_filter.set_unbuffered(False)
         self.file_sink_gate = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/gate', False)
         self.file_sink_gate.set_unbuffered(False)
-        self.file_sink_decoder = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/decoder', False)
+        self.file_sink_decoder2 = blocks.file_sink(gr.sizeof_float*1, '../misc/data/decoder_float', False)
+        self.file_sink_decoder2.set_unbuffered(False)
+        self.file_sink_decoder = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/decoder_complex', False)
         self.file_sink_decoder.set_unbuffered(False)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_gr_complex*1)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
@@ -104,6 +108,7 @@ class uhf_rfid_get_epc_nogui(gr.top_block):
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.blocks_float_to_complex_0, 0), (self.file_sink_reader_0, 0))
         self.connect((self.blocks_float_to_complex_0, 0), (self.uhd_usrp_sink, 0))
         self.connect((self.fir_filter, 0), (self.file_sink_matched_filter, 0))
         self.connect((self.fir_filter, 0), (self.rfid_gate, 0))
@@ -114,6 +119,7 @@ class uhf_rfid_get_epc_nogui(gr.top_block):
         self.connect((self.rfid_reader, 0), (self.multiply_const_ff, 0))
         self.connect((self.rfid_tag_decoder, 1), (self.blocks_null_sink_0, 0))
         self.connect((self.rfid_tag_decoder, 1), (self.file_sink_decoder, 0))
+        self.connect((self.rfid_tag_decoder, 0), (self.file_sink_decoder2, 0))
         self.connect((self.rfid_tag_decoder, 0), (self.rfid_reader, 0))
         self.connect((self.uhd_usrp_source, 0), (self.file_sink_source, 0))
         self.connect((self.uhd_usrp_source, 0), (self.fir_filter, 0))
