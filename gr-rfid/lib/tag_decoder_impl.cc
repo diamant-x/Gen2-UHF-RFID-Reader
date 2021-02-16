@@ -239,39 +239,52 @@ namespace gr {
           
           produce(1,written_sync);
         }
-        else if (false)
-        {
-          // Output 2: non-decoded data.
-          for (float j = RN16_index; j < ninput_items[0]; j += n_samples_TAG_BIT/2 )
-          {
-            number_of_half_bits++;
-            int k = round(j);
-            RN16_samples_complex.push_back(in[k]);
 
+        for (float j = RN16_index; j < ninput_items[0]; j += n_samples_TAG_BIT/2 )
+        {
+          number_of_half_bits++;
+          int k = round(j);
+          RN16_samples_complex.push_back(in[k]);
+
+          if (false) // Output Mod2: non-decoded data.
+          {
             // The next 2 lines are Mod2a
             out_2[written_sync] = in[k];  // j starts from RN16_index which is obtained from synchronization
             written_sync ++;              // you should increase this counter every time you write something to the output vector
 
             if (number_of_half_bits == 2*(RN16_BITS-1))
             {
-                // The next 2 lines are Mod2b
-                out_2[written_sync] = h_est;
-                written_sync ++;  
-                produce(1,written_sync);        
-                break;
+              // The next 2 lines are Mod2b
+              out_2[written_sync] = h_est;
+              written_sync ++;  
+              produce(1,written_sync);        
+              break;
             }
-          } 
-        }
-        else
-        {
-          // No Output 3. (Mind that further below is an additional output sequence)
+          }
         }
 
         // RN16 bits are passed to the next block for the creation of ACK message
-        if (number_of_half_bits == 2*(RN16_BITS-1))
-        {  
-          GR_LOG_INFO(d_debug_logger, "RN16 DECODED");
-          RN16_bits  = tag_detection_RN16(RN16_samples_complex);
+        if (number_of_half_bits >= 2*(RN16_BITS-1))
+        { 
+          if  (number_of_half_bits == 2*(RN16_BITS-1)) 
+          {
+            //std::cout << "-- RN16 Exact decode. ";
+            GR_LOG_INFO(d_debug_logger, " N16 DECODED");
+            RN16_bits  = tag_detection_RN16(RN16_samples_complex);
+          }
+          else
+          {
+            //std::cout << "-- RN16 Truncated decode. ";
+            RN16_samples_complex.resize(2*(RN16_BITS-1));
+            RN16_bits  = tag_detection_RN16(RN16_samples_complex);
+          }
+
+          /*//---------------------------------------------------------------         
+          std::cout << " RN16 : ";
+          for (std::vector<float>::const_iterator i = RN16_bits.begin(); i != RN16_bits.end(); ++i)
+          std::cout << *i;
+          std::cout << std::endl;
+          //---------------------------------------------------------------    */
 
           for(int bit=0; bit<RN16_bits.size(); bit++)
           {
@@ -283,6 +296,7 @@ namespace gr {
         }
         else
         {  
+          std::cout << "RN16 not decoded. Number of Half Bits Rn16 : " << number_of_half_bits << ". Comparison target : " << 2*(RN16_BITS-1) << std::endl;
           reader_state->reader_stats.cur_slot_number++;
           if(reader_state->reader_stats.cur_slot_number > reader_state->reader_stats.max_slot_number)
           {
