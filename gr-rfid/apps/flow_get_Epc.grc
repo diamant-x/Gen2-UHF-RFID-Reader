@@ -10,7 +10,7 @@
     </param>
     <param>
       <key>window_size</key>
-      <value>1920,1080</value>
+      <value>2560,1080</value>
     </param>
     <param>
       <key>category</key>
@@ -101,7 +101,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1224, 144)</value>
+      <value>(1008, 136)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -130,7 +130,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 68)</value>
+      <value>(360, 72)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -149,7 +149,8 @@
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>This is the maximum amplitude of the 'normalized' wave.
+Setting it to be 1 (0dbFS) makes the transmitted wave to behave anormally (sinusoidal instead of flat CW).</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -157,7 +158,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(616, 12)</value>
+      <value>(720, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -184,7 +185,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 68)</value>
+      <value>(280, 72)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -196,14 +197,14 @@
     </param>
     <param>
       <key>value</key>
-      <value>1*1e6</value>
+      <value>2*1e6</value>
     </param>
   </block>
   <block>
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>865.7e6</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -277,7 +278,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(64, 752)</value>
+      <value>(64, 704)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -308,7 +309,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 4)</value>
+      <value>(360, 8)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -320,7 +321,34 @@
     </param>
     <param>
       <key>value</key>
-      <value>15</value>
+      <value>18</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(432, 8)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>rx_gain_antenna</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>7.3</value>
     </param>
   </block>
   <block>
@@ -335,7 +363,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(704, 12)</value>
+      <value>(808, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -364,7 +392,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(448, 12)</value>
+      <value>(552, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -418,11 +446,38 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1120, 136)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>trigger_level</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0.02</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 4)</value>
+      <value>(280, 8)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -434,7 +489,34 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>value</key>
-      <value>10</value>
+      <value>16.5</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(168, 8)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>tx_gain_antenna</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>7.3</value>
     </param>
   </block>
   <block>
@@ -457,7 +539,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(464, 256)</value>
+      <value>(464, 208)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -500,7 +582,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(688, 832)</value>
+      <value>(688, 784)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -539,11 +621,11 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1496, 504)</value>
+      <value>(1752, 296)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -586,7 +668,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 440)</value>
+      <value>(32, 392)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -637,7 +719,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(832, 412)</value>
+      <value>(672, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -680,11 +762,11 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1408, 252)</value>
+      <value>(1192, 204)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -708,7 +790,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>k</key>
-      <value>-rx_gain</value>
+      <value>-15+rx_gain+rx_gain_antenna</value>
     </param>
     <param>
       <key>n</key>
@@ -739,7 +821,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(648, 688)</value>
+      <value>(656, 632)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -790,7 +872,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(480, 648)</value>
+      <value>(480, 600)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -841,7 +923,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(728, 632)</value>
+      <value>(728, 584)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -892,7 +974,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 536)</value>
+      <value>(472, 488)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -943,7 +1025,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 408)</value>
+      <value>(472, 360)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -994,7 +1076,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(480, 760)</value>
+      <value>(480, 712)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1045,7 +1127,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1056, 824)</value>
+      <value>(1056, 776)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1096,7 +1178,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(272, 256)</value>
+      <value>(272, 208)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1143,7 +1225,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 416)</value>
+      <value>(256, 368)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1186,11 +1268,11 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(992, 152)</value>
+      <value>(824, 120)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1254,7 +1336,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>label2</key>
-      <value>Tab 2</value>
+      <value>Phase and Constellation</value>
     </param>
     <param>
       <key>label3</key>
@@ -1286,7 +1368,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>num_tabs</key>
-      <value>2</value>
+      <value>3</value>
     </param>
   </block>
   <block>
@@ -1313,7 +1395,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(480, 828)</value>
+      <value>(480, 780)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1364,15 +1446,15 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1664, 408)</value>
+      <value>(1920, 200)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>gui_tab@1 : 1,2,1,1</value>
+      <value>gui_tab@2 : 1,2,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1648,7 +1730,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.02</value>
+      <value>trigger_level</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -1719,7 +1801,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1152, 256)</value>
+      <value>(1000, 208)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1991,7 +2073,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>name</key>
-      <value>RSSI (dBm?) Histogram Complex to Mag2 to log10</value>
+      <value>Normalized magnitude RX</value>
     </param>
     <param>
       <key>bins</key>
@@ -2046,7 +2128,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1152, 376)</value>
+      <value>(1000, 328)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2373,7 +2455,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1664, 216)</value>
+      <value>(1464, 168)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2390,6 +2472,333 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     <param>
       <key>id</key>
       <value>qtgui_histogram_sink_x_0_1</value>
+    </param>
+    <param>
+      <key>legend</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alpha1</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color1</key>
+      <value>"red"</value>
+    </param>
+    <param>
+      <key>label1</key>
+      <value>Power</value>
+    </param>
+    <param>
+      <key>marker1</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style1</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width1</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha10</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color10</key>
+      <value>"dark blue"</value>
+    </param>
+    <param>
+      <key>label10</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker10</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha2</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color2</key>
+      <value>"red"</value>
+    </param>
+    <param>
+      <key>label2</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker2</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style2</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width2</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha3</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color3</key>
+      <value>"green"</value>
+    </param>
+    <param>
+      <key>label3</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker3</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha4</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color4</key>
+      <value>"black"</value>
+    </param>
+    <param>
+      <key>label4</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker4</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha5</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color5</key>
+      <value>"cyan"</value>
+    </param>
+    <param>
+      <key>label5</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker5</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha6</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color6</key>
+      <value>"magenta"</value>
+    </param>
+    <param>
+      <key>label6</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker6</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha7</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color7</key>
+      <value>"yellow"</value>
+    </param>
+    <param>
+      <key>label7</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker7</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha8</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color8</key>
+      <value>"dark red"</value>
+    </param>
+    <param>
+      <key>label8</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker8</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha9</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color9</key>
+      <value>"dark green"</value>
+    </param>
+    <param>
+      <key>label9</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker9</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>xmax</key>
+      <value>20.5</value>
+    </param>
+    <param>
+      <key>xmin</key>
+      <value>-20.5*2</value>
+    </param>
+    <param>
+      <key>name</key>
+      <value>RX (dBm) Histogram</value>
+    </param>
+    <param>
+      <key>bins</key>
+      <value>200</value>
+    </param>
+    <param>
+      <key>nconnections</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>size</key>
+      <value>GUI_samples</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>update_time</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>qtgui_histogram_sink_x</key>
+    <param>
+      <key>accum</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>autoscale</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>axislabels</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1472, 328)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>gui_tab@1 : 1,2,1,1</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>grid</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>qtgui_histogram_sink_x_0_1_0</value>
     </param>
     <param>
       <key>legend</key>
@@ -2637,15 +3046,15 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>xmax</key>
-      <value>0</value>
+      <value>20.5</value>
     </param>
     <param>
       <key>xmin</key>
-      <value>-130</value>
+      <value>-20.5</value>
     </param>
     <param>
       <key>name</key>
-      <value>RSSI (dBm) Histogram</value>
+      <value>TX Power (dBm) Histogram</value>
     </param>
     <param>
       <key>bins</key>
@@ -2704,7 +3113,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(976, 264)</value>
+      <value>(824, 216)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2996,7 +3405,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.02</value>
+      <value>trigger_level</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -3071,7 +3480,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(976, 408)</value>
+      <value>(800, 368)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3363,7 +3772,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.02</value>
+      <value>trigger_level</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -3438,11 +3847,11 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1464, 392)</value>
+      <value>(1728, 184)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>gui_tab@1 : 1,0,1,2</value>
+      <value>gui_tab@2 : 1,0,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3730,7 +4139,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.02</value>
+      <value>trigger_level</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -3805,7 +4214,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1496, 248)</value>
+      <value>(1288, 200)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3822,6 +4231,373 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     <param>
       <key>id</key>
       <value>qtgui_time_sink_x_0_1</value>
+    </param>
+    <param>
+      <key>legend</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alpha1</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color1</key>
+      <value>"red"</value>
+    </param>
+    <param>
+      <key>label1</key>
+      <value>Power</value>
+    </param>
+    <param>
+      <key>marker1</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style1</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width1</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha10</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color10</key>
+      <value>"blue"</value>
+    </param>
+    <param>
+      <key>label10</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker10</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha2</key>
+      <value>0.0</value>
+    </param>
+    <param>
+      <key>color2</key>
+      <value>"blue"</value>
+    </param>
+    <param>
+      <key>label2</key>
+      <value>Magnitude</value>
+    </param>
+    <param>
+      <key>marker2</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style2</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>width2</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>alpha3</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color3</key>
+      <value>"green"</value>
+    </param>
+    <param>
+      <key>label3</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker3</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha4</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color4</key>
+      <value>"black"</value>
+    </param>
+    <param>
+      <key>label4</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker4</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha5</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color5</key>
+      <value>"cyan"</value>
+    </param>
+    <param>
+      <key>label5</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker5</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha6</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color6</key>
+      <value>"magenta"</value>
+    </param>
+    <param>
+      <key>label6</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker6</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha7</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color7</key>
+      <value>"yellow"</value>
+    </param>
+    <param>
+      <key>label7</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker7</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha8</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color8</key>
+      <value>"dark red"</value>
+    </param>
+    <param>
+      <key>label8</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker8</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha9</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color9</key>
+      <value>"dark green"</value>
+    </param>
+    <param>
+      <key>label9</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker9</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>name</key>
+      <value>RX Power</value>
+    </param>
+    <param>
+      <key>nconnections</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>size</key>
+      <value>GUI_samples</value>
+    </param>
+    <param>
+      <key>srate</key>
+      <value>adc_rate</value>
+    </param>
+    <param>
+      <key>stemplot</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>tr_chan</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>tr_delay</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>tr_level</key>
+      <value>trigger_level</value>
+    </param>
+    <param>
+      <key>tr_mode</key>
+      <value>qtgui.TRIG_MODE_NORM</value>
+    </param>
+    <param>
+      <key>tr_slope</key>
+      <value>qtgui.TRIG_SLOPE_NEG</value>
+    </param>
+    <param>
+      <key>tr_tag</key>
+      <value>""</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>update_time</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>ylabel</key>
+      <value>Power</value>
+    </param>
+    <param>
+      <key>yunit</key>
+      <value>dBm</value>
+    </param>
+    <param>
+      <key>ymax</key>
+      <value>-10</value>
+    </param>
+    <param>
+      <key>ymin</key>
+      <value>-130</value>
+    </param>
+  </block>
+  <block>
+    <key>qtgui_time_sink_x</key>
+    <param>
+      <key>autoscale</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>axislabels</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>Based on: https://files.ettus.com/manual/page_power.html#power_ref_levels</value>
+    </param>
+    <param>
+      <key>ctrlpanel</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>entags</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1304, 344)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>gui_tab@1 : 1,0,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>grid</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>qtgui_time_sink_x_0_1_0</value>
     </param>
     <param>
       <key>legend</key>
@@ -4069,7 +4845,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>name</key>
-      <value>Signal Power</value>
+      <value>TX Power</value>
     </param>
     <param>
       <key>nconnections</key>
@@ -4081,7 +4857,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>srate</key>
-      <value>adc_rate</value>
+      <value>dac_rate</value>
     </param>
     <param>
       <key>stemplot</key>
@@ -4097,7 +4873,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.02</value>
+      <value>0.2</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -4121,7 +4897,7 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>ylabel</key>
-      <value>RSSI</value>
+      <value>Power</value>
     </param>
     <param>
       <key>yunit</key>
@@ -4129,11 +4905,11 @@ The choice of Tari value and x shall be in accordance with local radio regulatio
     </param>
     <param>
       <key>ymax</key>
-      <value>0</value>
+      <value>20.5</value>
     </param>
     <param>
       <key>ymin</key>
-      <value>-130</value>
+      <value>-20.5</value>
     </param>
   </block>
   <block>
@@ -4157,7 +4933,7 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 548)</value>
+      <value>(288, 500)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4200,7 +4976,7 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 824)</value>
+      <value>(296, 776)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4247,7 +5023,7 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 648)</value>
+      <value>(288, 600)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4268,6 +5044,57 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     <param>
       <key>sample_rate</key>
       <value>int(samplerate_rfidblocks)</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_nlog10_ff</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 476)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>tx_dbfs</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>k</key>
+      <value>20-(31.5-tx_gain)+tx_gain_antenna</value>
+    </param>
+    <param>
+      <key>n</key>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -4942,7 +5769,7 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(864, 796)</value>
+      <value>(864, 748)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6277,7 +7104,7 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 236)</value>
+      <value>(8, 188)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6553,6 +7380,18 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     <sink_key>0</sink_key>
   </connection>
   <connection>
+    <source_block_id>multiply_const_ff</source_block_id>
+    <sink_block_id>qtgui_time_sink_x_0_1_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>multiply_const_ff</source_block_id>
+    <sink_block_id>tx_dbfs</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
     <source_block_id>rfid_gate</source_block_id>
     <sink_block_id>file_sink_gate</sink_block_id>
     <source_key>0</source_key>
@@ -6598,6 +7437,18 @@ Outputs: ¿Concatenated the magnitude variations of the Reader and the Tags. Wer
     <source_block_id>rfid_tag_decoder</source_block_id>
     <sink_block_id>file_sink_decoder</sink_block_id>
     <source_key>1</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>tx_dbfs</source_block_id>
+    <sink_block_id>qtgui_histogram_sink_x_0_1_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>tx_dbfs</source_block_id>
+    <sink_block_id>qtgui_time_sink_x_0_1_0</sink_block_id>
+    <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>

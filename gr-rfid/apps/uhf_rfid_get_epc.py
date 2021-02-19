@@ -72,13 +72,16 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.adc_rate = adc_rate = 2e6
-        self.tx_gain = tx_gain = 10
+        self.tx_gain_antenna = tx_gain_antenna = 7.3
+        self.tx_gain = tx_gain = 16.5
+        self.trigger_level = trigger_level = 0.02
         self.taps_fir_averaging_samples = taps_fir_averaging_samples = [1]*25
         self.samplerate_rfidblocks = samplerate_rfidblocks = adc_rate/1
-        self.rx_gain = rx_gain = 15
+        self.rx_gain_antenna = rx_gain_antenna = 7.3
+        self.rx_gain = rx_gain = 18
         self.print_results = print_results = 0
         self.frequency = frequency = 865.7e6
-        self.dac_rate = dac_rate = 1*1e6
+        self.dac_rate = dac_rate = 2*1e6
         self.ampl = ampl = 0.8
         self.GUI_samples = GUI_samples = int(0.7*(44+62+16+62+18+62+96+62)*(adc_rate*24/1000000))
 
@@ -97,6 +100,11 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.gui_tab_grid_layout_1 = Qt.QGridLayout()
         self.gui_tab_layout_1.addLayout(self.gui_tab_grid_layout_1)
         self.gui_tab.addTab(self.gui_tab_widget_1, 'RSSI')
+        self.gui_tab_widget_2 = Qt.QWidget()
+        self.gui_tab_layout_2 = Qt.QBoxLayout(Qt.QBoxLayout.TopToBottom, self.gui_tab_widget_2)
+        self.gui_tab_grid_layout_2 = Qt.QGridLayout()
+        self.gui_tab_layout_2.addLayout(self.gui_tab_grid_layout_2)
+        self.gui_tab.addTab(self.gui_tab_widget_2, 'Phase and Constellation')
         self.top_grid_layout.addWidget(self.gui_tab)
         self.uhd_usrp_source = uhd.usrp_source(
         	",".join(('addr=192.168.10.2', "")),
@@ -123,21 +131,74 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.uhd_usrp_sink.set_center_freq(frequency, 0)
         self.uhd_usrp_sink.set_gain(tx_gain, 0)
         self.uhd_usrp_sink.set_antenna('TX/RX', 0)
+        self.tx_dbfs = blocks.nlog10_ff(1, 1, 20-(31.5-tx_gain)+tx_gain_antenna)
         self.rfid_tag_decoder = rfid.tag_decoder(int(samplerate_rfidblocks))
         self.rfid_gate = rfid.gate(int(samplerate_rfidblocks))
+        self.qtgui_time_sink_x_0_1_0 = qtgui.time_sink_f(
+        	GUI_samples, #size
+        	dac_rate, #samp_rate
+        	'TX Power', #name
+        	2 #number of inputs
+        )
+        self.qtgui_time_sink_x_0_1_0.set_update_time(1)
+        self.qtgui_time_sink_x_0_1_0.set_y_axis(-20.5, 20.5)
+
+        self.qtgui_time_sink_x_0_1_0.set_y_label('Power', 'dBm')
+
+        self.qtgui_time_sink_x_0_1_0.enable_tags(-1, True)
+        self.qtgui_time_sink_x_0_1_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.2, 0, 1, "")
+        self.qtgui_time_sink_x_0_1_0.enable_autoscale(True)
+        self.qtgui_time_sink_x_0_1_0.enable_grid(True)
+        self.qtgui_time_sink_x_0_1_0.enable_axis_labels(True)
+        self.qtgui_time_sink_x_0_1_0.enable_control_panel(False)
+        self.qtgui_time_sink_x_0_1_0.enable_stem_plot(False)
+
+        if not False:
+          self.qtgui_time_sink_x_0_1_0.disable_legend()
+
+        labels = ['RSSI', 'Magnitude', '', '', '',
+                  '', '', '', '', '']
+        widths = [1, 0, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        colors = ["red", "blue", "green", "black", "cyan",
+                  "magenta", "yellow", "dark red", "dark green", "blue"]
+        styles = [1, 0, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        markers = [-1, -1, -1, -1, -1,
+                   -1, -1, -1, -1, -1]
+        alphas = [1.0, 0.0, 1.0, 1.0, 1.0,
+                  1.0, 1.0, 1.0, 1.0, 1.0]
+
+        for i in xrange(2):
+            if len(labels[i]) == 0:
+                self.qtgui_time_sink_x_0_1_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_time_sink_x_0_1_0.set_line_label(i, labels[i])
+            self.qtgui_time_sink_x_0_1_0.set_line_width(i, widths[i])
+            self.qtgui_time_sink_x_0_1_0.set_line_color(i, colors[i])
+            self.qtgui_time_sink_x_0_1_0.set_line_style(i, styles[i])
+            self.qtgui_time_sink_x_0_1_0.set_line_marker(i, markers[i])
+            self.qtgui_time_sink_x_0_1_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_time_sink_x_0_1_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_1_0.pyqwidget(), Qt.QWidget)
+        self.gui_tab_grid_layout_1.addWidget(self._qtgui_time_sink_x_0_1_0_win, 1, 0, 1, 2)
+        for r in range(1, 2):
+            self.gui_tab_grid_layout_1.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.gui_tab_grid_layout_1.setColumnStretch(c, 1)
         self.qtgui_time_sink_x_0_1 = qtgui.time_sink_f(
         	GUI_samples, #size
         	adc_rate, #samp_rate
-        	'Signal Power', #name
+        	'RX Power', #name
         	2 #number of inputs
         )
         self.qtgui_time_sink_x_0_1.set_update_time(1)
-        self.qtgui_time_sink_x_0_1.set_y_axis(-130, 0)
+        self.qtgui_time_sink_x_0_1.set_y_axis(-130, -10)
 
-        self.qtgui_time_sink_x_0_1.set_y_label('RSSI', 'dBm')
+        self.qtgui_time_sink_x_0_1.set_y_label('Power', 'dBm')
 
         self.qtgui_time_sink_x_0_1.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_1.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.02, 0, 1, "")
+        self.qtgui_time_sink_x_0_1.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, trigger_level, 0, 1, "")
         self.qtgui_time_sink_x_0_1.enable_autoscale(True)
         self.qtgui_time_sink_x_0_1.enable_grid(True)
         self.qtgui_time_sink_x_0_1.enable_axis_labels(True)
@@ -147,7 +208,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         if not False:
           self.qtgui_time_sink_x_0_1.disable_legend()
 
-        labels = ['RSSI', 'Magnitude', '', '', '',
+        labels = ['Power', 'Magnitude', '', '', '',
                   '', '', '', '', '']
         widths = [1, 0, 1, 1, 1,
                   1, 1, 1, 1, 1]
@@ -189,7 +250,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_0_0.set_y_label('Phase', 'rad')
 
         self.qtgui_time_sink_x_0_0_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.02, 0, 1, "")
+        self.qtgui_time_sink_x_0_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, trigger_level, 0, 1, "")
         self.qtgui_time_sink_x_0_0_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0_0_0.enable_grid(True)
         self.qtgui_time_sink_x_0_0_0.enable_axis_labels(True)
@@ -224,11 +285,11 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
             self.qtgui_time_sink_x_0_0_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_time_sink_x_0_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0_0.pyqwidget(), Qt.QWidget)
-        self.gui_tab_grid_layout_1.addWidget(self._qtgui_time_sink_x_0_0_0_win, 1, 0, 1, 2)
+        self.gui_tab_grid_layout_2.addWidget(self._qtgui_time_sink_x_0_0_0_win, 1, 0, 1, 2)
         for r in range(1, 2):
-            self.gui_tab_grid_layout_1.setRowStretch(r, 1)
+            self.gui_tab_grid_layout_2.setRowStretch(r, 1)
         for c in range(0, 2):
-            self.gui_tab_grid_layout_1.setColumnStretch(c, 1)
+            self.gui_tab_grid_layout_2.setColumnStretch(c, 1)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_f(
         	GUI_samples, #size
         	adc_rate, #samp_rate
@@ -241,7 +302,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_0.set_y_label('Phase', 'deg')
 
         self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.02, 0, 1, "")
+        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, trigger_level, 0, 1, "")
         self.qtgui_time_sink_x_0_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0_0.enable_grid(True)
         self.qtgui_time_sink_x_0_0.enable_axis_labels(True)
@@ -293,7 +354,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_y_label('Amplitude', '?')
 
         self.qtgui_time_sink_x_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.02, 0, 0, "")
+        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, trigger_level, 0, 0, "")
         self.qtgui_time_sink_x_0.enable_autoscale(True)
         self.qtgui_time_sink_x_0.enable_grid(True)
         self.qtgui_time_sink_x_0.enable_axis_labels(True)
@@ -333,12 +394,59 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
             self.gui_tab_grid_layout_0.setRowStretch(r, 1)
         for c in range(0, 2):
             self.gui_tab_grid_layout_0.setColumnStretch(c, 1)
+        self.qtgui_histogram_sink_x_0_1_0 = qtgui.histogram_sink_f(
+        	GUI_samples,
+        	200,
+                -20.5,
+                20.5,
+        	'TX Power (dBm) Histogram',
+        	1
+        )
+
+        self.qtgui_histogram_sink_x_0_1_0.set_update_time(1)
+        self.qtgui_histogram_sink_x_0_1_0.enable_autoscale(True)
+        self.qtgui_histogram_sink_x_0_1_0.enable_accumulate(False)
+        self.qtgui_histogram_sink_x_0_1_0.enable_grid(False)
+        self.qtgui_histogram_sink_x_0_1_0.enable_axis_labels(True)
+
+        if not False:
+          self.qtgui_histogram_sink_x_0_1_0.disable_legend()
+
+        labels = ['Magnitude', '', '', '', '',
+                  '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        colors = ["red", "red", "green", "black", "cyan",
+                  "magenta", "yellow", "dark red", "dark green", "dark blue"]
+        styles = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        markers = [-1, -1, -1, -1, -1,
+                   -1, -1, -1, -1, -1]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+                  1.0, 1.0, 1.0, 1.0, 1.0]
+        for i in xrange(1):
+            if len(labels[i]) == 0:
+                self.qtgui_histogram_sink_x_0_1_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_histogram_sink_x_0_1_0.set_line_label(i, labels[i])
+            self.qtgui_histogram_sink_x_0_1_0.set_line_width(i, widths[i])
+            self.qtgui_histogram_sink_x_0_1_0.set_line_color(i, colors[i])
+            self.qtgui_histogram_sink_x_0_1_0.set_line_style(i, styles[i])
+            self.qtgui_histogram_sink_x_0_1_0.set_line_marker(i, markers[i])
+            self.qtgui_histogram_sink_x_0_1_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_histogram_sink_x_0_1_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0_1_0.pyqwidget(), Qt.QWidget)
+        self.gui_tab_grid_layout_1.addWidget(self._qtgui_histogram_sink_x_0_1_0_win, 1, 2, 1, 1)
+        for r in range(1, 2):
+            self.gui_tab_grid_layout_1.setRowStretch(r, 1)
+        for c in range(2, 3):
+            self.gui_tab_grid_layout_1.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0_1 = qtgui.histogram_sink_f(
         	GUI_samples,
         	200,
-                -130,
-                0,
-        	'RSSI (dBm) Histogram',
+                -20.5*2,
+                20.5,
+        	'RX (dBm) Histogram',
         	1
         )
 
@@ -351,7 +459,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         if not False:
           self.qtgui_histogram_sink_x_0_1.disable_legend()
 
-        labels = ['Magnitude', '', '', '', '',
+        labels = ['Power', '', '', '', '',
                   '', '', '', '', '']
         widths = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]
@@ -432,7 +540,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         	200,
                 -0.1,
                 1.1,
-        	'RSSI (dBm?) Histogram Complex to Mag2 to log10',
+        	'Normalized magnitude RX',
         	1
         )
 
@@ -482,7 +590,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.qtgui_const_sink_x_0.set_update_time(1.0)
         self.qtgui_const_sink_x_0.set_y_axis(-2, 2)
         self.qtgui_const_sink_x_0.set_x_axis(-2, 2)
-        self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, 0.02, 1, "")
+        self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, trigger_level, 1, "")
         self.qtgui_const_sink_x_0.enable_autoscale(True)
         self.qtgui_const_sink_x_0.enable_grid(False)
         self.qtgui_const_sink_x_0.enable_axis_labels(True)
@@ -514,11 +622,11 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
             self.qtgui_const_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.gui_tab_grid_layout_1.addWidget(self._qtgui_const_sink_x_0_win, 1, 2, 1, 1)
+        self.gui_tab_grid_layout_2.addWidget(self._qtgui_const_sink_x_0_win, 1, 2, 1, 1)
         for r in range(1, 2):
-            self.gui_tab_grid_layout_1.setRowStretch(r, 1)
+            self.gui_tab_grid_layout_2.setRowStretch(r, 1)
         for c in range(2, 3):
-            self.gui_tab_grid_layout_1.setColumnStretch(c, 1)
+            self.gui_tab_grid_layout_2.setColumnStretch(c, 1)
 
         def _print_results_probe():
             while True:
@@ -550,7 +658,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.file_sink_decoder = blocks.file_sink(gr.sizeof_gr_complex*1, '../misc/data/decoder_complex', False)
         self.file_sink_decoder.set_unbuffered(False)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_gr_complex*1)
-        self.blocks_nlog10_ff_0 = blocks.nlog10_ff(1, 1, -rx_gain)
+        self.blocks_nlog10_ff_0 = blocks.nlog10_ff(1, 1, -15+rx_gain+rx_gain_antenna)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((57.295779513082320876798154814105, ))
         self.blocks_float_to_complex_0_0 = blocks.float_to_complex(1)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
@@ -580,6 +688,8 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.connect((self.fir_filter, 0), (self.file_sink_matched_filter, 0))
         self.connect((self.fir_filter, 0), (self.rfid_gate, 0))
         self.connect((self.multiply_const_ff, 0), (self.blocks_float_to_complex_0, 0))
+        self.connect((self.multiply_const_ff, 0), (self.qtgui_time_sink_x_0_1_0, 1))
+        self.connect((self.multiply_const_ff, 0), (self.tx_dbfs, 0))
         self.connect((self.rfid_gate, 0), (self.file_sink_gate, 0))
         self.connect((self.rfid_gate, 0), (self.rfid_tag_decoder, 0))
         self.connect((self.rfid_reader, 0), (self.file_sink_reader, 0))
@@ -588,6 +698,8 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         self.connect((self.rfid_tag_decoder, 1), (self.file_sink_decoder, 0))
         self.connect((self.rfid_tag_decoder, 0), (self.file_sink_decoder2, 0))
         self.connect((self.rfid_tag_decoder, 0), (self.rfid_reader, 0))
+        self.connect((self.tx_dbfs, 0), (self.qtgui_histogram_sink_x_0_1_0, 0))
+        self.connect((self.tx_dbfs, 0), (self.qtgui_time_sink_x_0_1_0, 0))
         self.connect((self.uhd_usrp_source, 0), (self.blocks_complex_to_magphase_0, 0))
         self.connect((self.uhd_usrp_source, 0), (self.file_sink_source, 0))
         self.connect((self.uhd_usrp_source, 0), (self.fir_filter, 0))
@@ -612,6 +724,13 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
             self.qtgui_time_sink_x_0_0.set_samp_rate(self.adc_rate)
             self.qtgui_time_sink_x_0.set_samp_rate(self.adc_rate)
 
+    def get_tx_gain_antenna(self):
+        return self.tx_gain_antenna
+
+    def set_tx_gain_antenna(self, tx_gain_antenna):
+        with self._lock:
+            self.tx_gain_antenna = tx_gain_antenna
+
     def get_tx_gain(self):
         return self.tx_gain
 
@@ -620,6 +739,18 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
             self.tx_gain = tx_gain
             self.uhd_usrp_sink.set_gain(self.tx_gain, 0)
 
+
+    def get_trigger_level(self):
+        return self.trigger_level
+
+    def set_trigger_level(self, trigger_level):
+        with self._lock:
+            self.trigger_level = trigger_level
+            self.qtgui_time_sink_x_0_1.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, self.trigger_level, 0, 1, "")
+            self.qtgui_time_sink_x_0_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, self.trigger_level, 0, 1, "")
+            self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, self.trigger_level, 0, 1, "")
+            self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, self.trigger_level, 0, 0, "")
+            self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_NORM, qtgui.TRIG_SLOPE_NEG, self.trigger_level, 1, "")
 
     def get_taps_fir_averaging_samples(self):
         return self.taps_fir_averaging_samples
@@ -635,6 +766,13 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
     def set_samplerate_rfidblocks(self, samplerate_rfidblocks):
         with self._lock:
             self.samplerate_rfidblocks = samplerate_rfidblocks
+
+    def get_rx_gain_antenna(self):
+        return self.rx_gain_antenna
+
+    def set_rx_gain_antenna(self, rx_gain_antenna):
+        with self._lock:
+            self.rx_gain_antenna = rx_gain_antenna
 
     def get_rx_gain(self):
         return self.rx_gain
@@ -668,6 +806,7 @@ class uhf_rfid_get_epc(gr.top_block, Qt.QWidget):
         with self._lock:
             self.dac_rate = dac_rate
             self.uhd_usrp_sink.set_samp_rate(self.dac_rate)
+            self.qtgui_time_sink_x_0_1_0.set_samp_rate(self.dac_rate)
 
     def get_ampl(self):
         return self.ampl
