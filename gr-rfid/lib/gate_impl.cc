@@ -114,12 +114,24 @@ namespace gr {
         reader_state->gate_status = GATE_CLOSED;
         reader_state->n_samples_to_ungate = (EPC_BITS + TAG_PREAMBLE_BITS) * n_samples_TAG_BIT + 2*n_samples_TAG_BIT;
         n_samples = 0;
+        add_item_tag(
+                0, // Port number
+                nitems_written(0) + written, // Sample id location to attach the tag.
+                pmt::mp("rfid_status"), // Key
+                pmt::intern(std::string("Tag EPC Talking")) // Value
+                );
       }
       else if (reader_state->gate_status == GATE_SEEK_RN16)
       {
         reader_state->gate_status = GATE_CLOSED;
         reader_state->n_samples_to_ungate = (RN16_BITS + TAG_PREAMBLE_BITS) * n_samples_TAG_BIT + 2*n_samples_TAG_BIT;
         n_samples = 0;
+        add_item_tag(
+                0, // Port number
+                nitems_written(0) + written, // Sample id location to attach the tag.
+                pmt::mp("rfid_status"), // Key
+                pmt::intern(std::string("Tag RN16 Talking")) // Value
+                );
       }
       
       if (reader_state->status == RUNNING)
@@ -164,6 +176,11 @@ namespace gr {
             if(n_samples > n_samples_T1 && signal_state == POS_EDGE && num_pulses > NUM_PULSES_COMMAND)
             {
               GR_LOG_INFO(d_debug_logger, "READER COMMAND DETECTED");
+              add_item_tag(0, // Port number
+                nitems_written(0) + written, // Sample id location to attach the tag.
+                pmt::mp("rfid_status"), // Key
+                pmt::intern(std::string("One Side Talking")) // Value
+                );
 
               reader_state->gate_status = GATE_OPEN;
 
@@ -188,6 +205,12 @@ namespace gr {
             written++;
             if (n_samples >= reader_state->n_samples_to_ungate)
             {
+              /*add_item_tag(
+                0, // Port number
+                nitems_written(0) + written, // Sample id location to attach the tag.
+                pmt::mp("rfid_status"), // Key
+                pmt::intern(std::string("One Side Silenced")) // Value
+                );*/
               reader_state->gate_status = GATE_CLOSED;    
               number_samples_consumed = i+1;
               break;

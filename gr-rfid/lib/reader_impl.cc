@@ -217,6 +217,11 @@ namespace gr {
       {
         case START:
           GR_LOG_INFO(d_debug_logger, "START");
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking START")) // Value
+            );
 
           memcpy(&out[written], &cw_ack[0], sizeof(float) * cw_ack.size() );
           written += cw_ack.size();
@@ -225,6 +230,11 @@ namespace gr {
 
         case POWER_DOWN:
           GR_LOG_INFO(d_debug_logger, "POWER DOWN");
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking POWER DOWN")) // Value
+            );
           memcpy(&out[written], &p_down[0], sizeof(float) * p_down.size() );
           written += p_down.size();
           reader_state->gen2_logic_status = START;    
@@ -232,6 +242,11 @@ namespace gr {
 
         case SEND_NAK_QR:
           GR_LOG_INFO(d_debug_logger, "SEND NAK");
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking NAK-R")) // Value
+            );
           memcpy(&out[written], &nak[0], sizeof(float) * nak.size() );
           written += nak.size();
           memcpy(&out[written], &cw[0], sizeof(float) * cw.size() );
@@ -241,6 +256,11 @@ namespace gr {
 
         case SEND_NAK_Q:
           GR_LOG_INFO(d_debug_logger, "SEND NAK");
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking NAK")) // Value
+            );
           memcpy(&out[written], &nak[0], sizeof(float) * nak.size() );
           written += nak.size();
           memcpy(&out[written], &cw[0], sizeof(float) * cw.size() );
@@ -263,6 +283,11 @@ namespace gr {
           reader_state->decoder_status = DECODER_DECODE_RN16;
           reader_state->gate_status    = GATE_SEEK_RN16;
 
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking QUERY")) // Value
+            );
           memcpy(&out[written], &preamble[0], sizeof(float) * preamble.size() );
           written+=preamble.size();
    
@@ -280,6 +305,11 @@ namespace gr {
             }
           }
           // Send CW for RN16
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Silenced QUERY - CW Only")) // Value
+            );
           memcpy(&out[written], &cw_query[0], sizeof(float) * cw_query.size() );
           written+=cw_query.size();
 
@@ -298,6 +328,11 @@ namespace gr {
             gen_ack_bits(in);
           
             // Send FrameSync
+            add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking ACK")) // Value
+            );
             memcpy(&out[written], &frame_sync[0], sizeof(float) * frame_sync.size() );
             written += frame_sync.size();
 
@@ -321,6 +356,11 @@ namespace gr {
 
         case SEND_CW:
           GR_LOG_INFO(d_debug_logger, "SEND CW");
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Silenced - CW Only")) // Value
+            );
           memcpy(&out[written], &cw_ack[0], sizeof(float) * cw_ack.size() );
           written += cw_ack.size();
           reader_state->gen2_logic_status = IDLE;      // Return to IDLE
@@ -334,9 +374,19 @@ namespace gr {
           reader_state->gate_status    = GATE_SEEK_RN16;
           reader_state->reader_stats.n_queries_sent +=1;  
 
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Talking QUERY_REP")) // Value
+            );
           memcpy(&out[written], &query_rep[0], sizeof(float) * query_rep.size() );
           written += query_rep.size();
-
+          
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Reader Silenced QUERY_REP - CW Only")) // Value
+            );
           memcpy(&out[written], &cw_query[0], sizeof(float) * cw_query.size());
           written+=cw_query.size();
 

@@ -227,6 +227,11 @@ namespace gr {
         // Change true for either one output or the other.
         if (true)
         {
+          add_item_tag(1, // Port number
+            nitems_written(1) + written_sync, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Talking RN16")) // Value
+            );
           // Output 1: decoding data after matched filtering and dc offset removal 
           for (int j = 0; j < ninput_items[0]; j ++ )
           {
@@ -234,6 +239,11 @@ namespace gr {
             written_sync ++;
           }    
           
+          add_item_tag(1, // Port number
+            nitems_written(1) + written_sync, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Finished RN16")) // Value
+            );
           out_2[written_sync] = 20; // This is hard-coded into the output to mark the splits between consecutive RN16 outputs.
           written_sync ++;  
           
@@ -286,11 +296,22 @@ namespace gr {
           std::cout << std::endl;
           //---------------------------------------------------------------    */
 
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Talking RN16")) // Value
+            );
+
           for(int bit=0; bit<RN16_bits.size(); bit++)
           {
             out[written] =  RN16_bits[bit];
             written ++;
           }
+          add_item_tag(0, // Port number
+            nitems_written(0) + written, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Finished RN16")) // Value
+            );
           produce(0,written);
           reader_state->gen2_logic_status = SEND_ACK;
         }
@@ -334,12 +355,22 @@ namespace gr {
         // Mod3 Output of: EPC decoding data after matched filtering and dc offset removal (similar to the lines 227-234). This might be concatenated with the previous
         if (true)
         {
+          add_item_tag(1, // Port number
+            nitems_written(1) + written_sync, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Talking EPC")) // Value
+            );
           for (int j = 0; j < ninput_items[0] ; j ++ )
           {
             out_2[written_sync] = in[j];
               written_sync ++;
           }
-          
+
+          add_item_tag(1, // Port number
+            nitems_written(1) + written_sync, // Sample id location to attach the tag.
+            pmt::mp("rfid_status"), // Key
+            pmt::intern(std::string("Tag Finished EPC")) // Value
+            );
           out_2[written_sync] = 20; // This is hard-coded into the output to mark the splits between consecutive EPC outputs.
           written_sync ++;  
             
